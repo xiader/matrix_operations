@@ -52,7 +52,7 @@ public class Executor {
                         stack.push(mo.subtract(left, right));
                         break;
                     case "*":
-                        stack.push(mo.multiply(left, right));
+                            stack.push(mo.multiply(left, right));
                         break;
                     default:
                         throw new UnsupportedOperationException("unrecognisable operand" + t);
