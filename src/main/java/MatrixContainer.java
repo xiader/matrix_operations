@@ -1,19 +1,21 @@
 public class MatrixContainer {
-    private int [][]matrixTemplate;
+    private final String matrixName;
+    private long [][]matrixTemplate;
     private int rows;
     private int columns;
 
-    public MatrixContainer(int[][] firstMatrix) {
+    public MatrixContainer(long[][] firstMatrix, String matrixName) {
         this.matrixTemplate = firstMatrix;
         this.rows = matrixTemplate.length;
         this.columns = matrixTemplate[0].length;
+        this.matrixName = matrixName;
     }
 
-    public int[][] getMatrixTemplate() {
+    public long[][] getMatrixTemplate() {
         return matrixTemplate;
     }
 
-    public void setMatrixTemplate(int[][] matrixTemplate) {
+    public void setMatrixTemplate(long[][] matrixTemplate) {
         this.matrixTemplate = matrixTemplate;
     }
 
@@ -33,4 +35,7 @@ public class MatrixContainer {
         this.columns = columns;
     }
 
+    public String getMatrixName() {
+        return matrixName;
+    }
 }
