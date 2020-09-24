@@ -2,7 +2,6 @@ import java.util.*;
 
 public class Executor {
 
-
     private final InputResolver inputResolver = new InputResolver();
     private final List<String> matrixDefinitions;
     private final String expression;
@@ -15,15 +14,26 @@ public class Executor {
     public void doExecute() {
         Map<String, MatrixContainer> nameAndMatrixValue = new HashMap<>();
         for (String oneDefinition : this.matrixDefinitions) {
-            MatrixContainer matrixContainer = this.inputResolver.parseInputString(oneDefinition);
-            nameAndMatrixValue.put(matrixContainer.getMatrixName(), matrixContainer);
+            MatrixContainer matrixContainer;
+            try {
+                matrixContainer = this.inputResolver.parseInputString(oneDefinition);
+                nameAndMatrixValue.put(matrixContainer.getMatrixName(), matrixContainer);
+            } catch (IllegalArgumentException e) {
+                ConsoleOutPut.printError("Exception caught: " + e.getClass().getSimpleName() +". Can't "+ e.getMessage() +".");
+                return;
+            }
         }
 
         String[] expressionAsTokes =  this.inputResolver.parseInputExpression(expression);
         String[] expressionAsReversePolishNotation = ExpressionResolver.infixToRPN(expressionAsTokes);
 
-        MatrixContainer result = calculateExpression(expressionAsReversePolishNotation, nameAndMatrixValue);
-
+        MatrixContainer result;
+        try {
+            result = calculateExpression(expressionAsReversePolishNotation, nameAndMatrixValue);
+        } catch (IllegalArgumentException e) {
+            ConsoleOutPut.printError("Exception caught: " + e.getClass().getSimpleName() +". Can't "+ e.getMessage() +".");
+            return;
+        }
         long[][] arr = result.getMatrixTemplate();
         ConsoleOutPut.print(arr);
     }
@@ -34,7 +44,7 @@ public class Executor {
         String operators = "+-*";
         MatrixOperations mo = new MatrixOperationsImpl();
 
-        Stack<MatrixContainer> stack = new Stack<>();
+        Deque<MatrixContainer> stack = new ArrayDeque<>();
 
         for (String t : tokens) {
             //push to stack if it is a matrix name
@@ -52,7 +62,7 @@ public class Executor {
                         stack.push(mo.subtract(left, right));
                         break;
                     case "*":
-                            stack.push(mo.multiply(left, right));
+                         stack.push(mo.multiply(left, right));
                         break;
                     default:
                         throw new UnsupportedOperationException("unrecognisable operand" + t);

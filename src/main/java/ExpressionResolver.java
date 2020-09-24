@@ -27,10 +27,7 @@ public class ExpressionResolver {
 			throw new IllegalArgumentException("Invalid token: " + token);
 		}
 
-		if (OPERATORS.get(token)[1] == type) {
-			return true;
-		}
-		return false;
+		return OPERATORS.get(token)[1] == type;
 	}
 
 	// Compare precedence of operators.
@@ -45,11 +42,11 @@ public class ExpressionResolver {
 	// Convert infix expression (2 + 2) format into reverse Polish notation (2 2 +)
 	public static String[] infixToRPN(String[] inputTokens) {
 		ArrayList<String> out = new ArrayList<>();
-		Stack<String> stack = new Stack<>();
+		Deque<String> stack = new ArrayDeque<>();
 		for (String token : inputTokens) {
 			if (isOperator(token)) {
 				// While stack not empty AND stack top element is an operator
-				while (!stack.empty() && isOperator(stack.peek())) {
+				while (!stack.isEmpty() && isOperator(stack.peek())) {
 					if ((isAssociative(token, LEFT_ASSOC) &&
 							comparePrecedence(token, stack.peek()) <= 0) ||
 							(isAssociative(token, RIGHT_ASSOC) &&
@@ -67,10 +64,11 @@ public class ExpressionResolver {
 				out.add(token);
 			}
 		}
-		while (!stack.empty()) {
+		while (!stack.isEmpty()) {
 			out.add(stack.pop());
 		}
 		String[] output = new String[out.size()];
+
 		return out.toArray(output);
 	}
 

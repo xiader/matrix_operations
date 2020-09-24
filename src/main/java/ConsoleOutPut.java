@@ -15,4 +15,8 @@ public class ConsoleOutPut {
 		stringBuilder.append("]");
 		System.out.println(stringBuilder);
 	}
+
+	public static void printError(String str) {
+		System.err.println(str);
+	}
 }
