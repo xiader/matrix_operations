@@ -1,10 +1,16 @@
 import java.util.*;
 
+/**
+ * @author Alexander
+ * @version 1.0
+ */
 public class ExpressionResolver {
 	// Associativity constants for operators
 	private static final int LEFT_ASSOC = 0;
 	private static final int RIGHT_ASSOC = 1;
-
+	/**
+	 * operators with weight
+	 */
 	private static final Map<String, int[]> OPERATORS = new HashMap<>();
 
 	static {
@@ -39,7 +45,12 @@ public class ExpressionResolver {
 		return OPERATORS.get(token1)[0] - OPERATORS.get(token2)[0];
 	}
 
-	// Convert infix expression (2 + 2) format into reverse Polish notation (2 2 +)
+	/**
+	 * Convert infix expression (2 + 2) format into reverse Polish notation (2 2 +)
+	 *
+	 * @param inputTokens - variables with operators
+	 * @return - sorted array of tokens (according to RPN order)
+	 */
 	public static String[] infixToRPN(String[] inputTokens) {
 		ArrayList<String> out = new ArrayList<>();
 		Deque<String> stack = new ArrayDeque<>();
@@ -71,11 +82,5 @@ public class ExpressionResolver {
 
 		return out.toArray(output);
 	}
-
-
-
-
-
-
 
 }

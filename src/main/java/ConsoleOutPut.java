@@ -1,10 +1,20 @@
+/**
+ * @author Alexander
+ * @version 1.0
+ */
 public class ConsoleOutPut {
 
-	private ConsoleOutPut () {}
+	private ConsoleOutPut() {
+	}
 
-	public static void print(long[][] arr) {
+	/**
+	 * prints array to console in specific format
+	 *
+	 * @param arr - array as two dimensional array of int
+	 */
+	public static void print(int[][] arr) {
 		StringBuilder stringBuilder = new StringBuilder("[");
-		for (long[] ints : arr) {
+		for (int[] ints : arr) {
 			for (int j = 0; (ints != null && j < ints.length); j++) {
 				stringBuilder.append(ints[j]).append(", ");
 			}
@@ -16,6 +26,11 @@ public class ConsoleOutPut {
 		System.out.println(stringBuilder);
 	}
 
+	/**
+	 * prints error to console
+	 *
+	 * @param str - string to print
+	 */
 	public static void printError(String str) {
 		System.err.println(str);
 	}
