@@ -12,7 +12,6 @@ class InputResolverTest {
 		MatrixContainer actual = ir.parse(input);
 
 		int[][] twoDArr = new int[3][3];
-
 		twoDArr[0][0] = -10;
 		twoDArr[0][1] = 0;
 		twoDArr[0][2] = 2;

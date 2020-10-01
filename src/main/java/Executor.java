@@ -52,30 +52,29 @@ public class Executor {
 	}
 
 	//performs operations in required order
-	private static MatrixContainer calculateExpression(String[] tokens, Map<String, MatrixContainer> mCm) {
-		MatrixContainer returnValue;
+	private static MatrixContainer calculateExpression(String[] tokens, Map<String, MatrixContainer> matrixContainerMap) {
 		String operators = "+-*";
-		MatrixOperationsImpl mo = new MatrixOperationsImpl();
+		MatrixOperationsImpl matrixOperations = new MatrixOperationsImpl();
 
 		Deque<MatrixContainer> stack = new ArrayDeque<>();
 
 		for (String t : tokens) {
 			//push to stack if it is a matrix name
 			if (!operators.contains(t)) {
-				MatrixContainer mc = getByName(mCm, t);
+				MatrixContainer mc = getByName(matrixContainerMap, t);
 				stack.push(mc);
 			} else {
 				MatrixContainer right = stack.pop();
 				MatrixContainer left = stack.pop();
 				switch (t) {
 					case "+":
-						stack.push(mo.add(left, right));
+						stack.push(matrixOperations.add(left, right));
 						break;
 					case "-":
-						stack.push(mo.subtract(left, right));
+						stack.push(matrixOperations.subtract(left, right));
 						break;
 					case "*":
-						stack.push(mo.multiply(left, right));
+						stack.push(matrixOperations.multiply(left, right));
 						break;
 					default:
 						throw new UnsupportedOperationException("unrecognisable operand" + t);
@@ -84,9 +83,7 @@ public class Executor {
 			}
 		}
 
-		returnValue = stack.pop();
-
-		return returnValue;
+		return stack.pop();
 	}
 
 	private static MatrixContainer getByName(Map<String, MatrixContainer> mCm, String key) {

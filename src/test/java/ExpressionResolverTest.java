@@ -8,9 +8,7 @@ class ExpressionResolverTest {
 	void testInfixToRPN() {
 		String[]  inputTokens = new String[] {"M", "+", "M"};
 		String[] tokensOrganized = ExpressionResolver.infixToRPN(inputTokens);
-
 		String[] expected = new String[] {"M", "M", "+"};
-
 		assertArrayEquals(expected, tokensOrganized);
 	}
 }
